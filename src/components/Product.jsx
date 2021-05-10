@@ -2,27 +2,24 @@ import React from "react";
 import "../assets/css/Product.css";
 import product_image from "../assets/images/product_image.jpg";
 
-function Product() {
+function Product({ title, img_url, price, rating }) {
   return (
     <div className="product">
       <div className="product__info">
-        <p>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-          aspernatur unde
-        </p>
+        <p>{title}</p>
         <p className="product__price">
-          <small>₹</small>
-          <strong>500</strong>
+          <small>₹ </small>
+          <strong>{price}</strong>
         </p>
         <div className="product__rating">
-          {Array(5)
+          {Array(rating)
             .fill()
             .map((_, i) => (
               <p>🌟</p>
             ))}
         </div>
       </div>
-      <img src={product_image} alt="product image" />
+      <img src={img_url} alt="product image" />
       <button>Add to Cart</button>
     </div>
   );
