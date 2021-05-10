@@ -1,6 +1,5 @@
 import React from "react";
 import "../assets/css/Product.css";
-import product_image from "../assets/images/product_image.jpg";
 
 function Product({ title, img_url, price, rating }) {
   return (
