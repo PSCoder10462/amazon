@@ -6,6 +6,7 @@ import { useStateValue } from "../ReactContextApi/StateProvider";
 import { REMOVE_FROM_BASKET } from "../ReactContextApi/ActionTypes";
 
 function CheckoutProduct({ id, title, img_url, price, rating }) {
+  // eslint-disable-next-line
   const [state, dispatch] = useStateValue();
 
   const removeFromBasket = () => {

@@ -5,6 +5,7 @@ import CheckoutProduct from "./CheckoutProduct";
 import { useStateValue } from "../ReactContextApi/StateProvider";
 
 function Checkout() {
+  // eslint-disable-next-line
   const [{ basket }, dispatch] = useStateValue();
 
   return (
