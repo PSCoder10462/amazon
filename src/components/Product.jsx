@@ -2,8 +2,26 @@ import React from "react";
 import "../assets/css/Product.css";
 import StarIcon from "@material-ui/icons/Star";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
+import { useStateValue } from "../ReactContextApi/StateProvider";
+import { ADD_TO_BASKET } from "../ReactContextApi/ActionTypes";
 
-function Product({ title, img_url, price, rating }) {
+function Product({ id, title, img_url, price, rating }) {
+  // eslint-disable-next-line
+  const [state, dispatch] = useStateValue();
+  const addToBasket = () => {
+    // dispatch item to basket
+    dispatch({
+      type: ADD_TO_BASKET,
+      item: {
+        id,
+        title,
+        img_url,
+        price,
+        rating,
+      },
+    });
+  };
+
   return (
     <div className="product">
       <div className="product__info">
@@ -16,17 +34,17 @@ function Product({ title, img_url, price, rating }) {
           {Array(rating)
             .fill()
             .map((_, i) => (
-              <StarIcon />
+              <StarIcon key={i} />
             ))}
           {Array(5 - rating)
             .fill()
             .map((_, i) => (
-              <StarOutlineIcon />
+              <StarOutlineIcon key={i} />
             ))}
         </div>
       </div>
-      <img src={img_url} alt="product image" />
-      <button>Add to Cart</button>
+      <img src={img_url} alt="product" />
+      <button onClick={addToBasket}>Add to Cart</button>
     </div>
   );
 }
