@@ -39,7 +39,7 @@ function Subtotal() {
         displayType={"text"}
         prefix={"₹"}
       />
-      <button>Proceed to Checkout</button>
+      <button className="ptr">Proceed to Checkout</button>
     </div>
   );
 }

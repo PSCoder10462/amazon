@@ -38,7 +38,9 @@ function CheckoutProduct({ id, title, img_url, price, rating }) {
               <StarOutlineIcon key={i} />
             ))}
         </div>
-        <button onClick={removeFromBasket}>Remove from Cart</button>
+        <button onClick={removeFromBasket} className="ptr">
+          Remove from Cart
+        </button>
       </div>
     </div>
   );

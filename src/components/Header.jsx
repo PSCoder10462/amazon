@@ -3,12 +3,31 @@ import amazon from "../assets/images/amazon.png";
 import "../assets/css/Header.css";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useStateValue } from "../ReactContextApi/StateProvider.js";
+import firebase from "../firebase";
 
 function Header() {
   // eslint-disable-next-line
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
+  const history = useHistory();
+  const handleUser = () => {
+    if (user) {
+      const e = window.confirm(
+        "You will be signed out! \nStill want to continue?"
+      );
+      if (e) {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            console.log("signed out");
+          })
+          .catch((err) => console.log(err.message));
+      }
+    } else history.push("/login");
+  };
+
   return (
     <div className="header">
       <Link to="/">
@@ -19,12 +38,14 @@ function Header() {
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav">
-        <Link to="/login">
-          <div className="header__option">
-            <span className="header__optionLineOne">Hello Guest</span>
-            <span className="header__optionLineTwo">Sign In</span>
-          </div>
-        </Link>
+        <div className="header__option ptr" onClick={handleUser}>
+          <span className="header__optionLineOne">
+            Hello {user ? `${user.email}` : "Guest"}
+          </span>
+          <span className="header__optionLineTwo">
+            {user ? "Sign Out" : "Sign In"}
+          </span>
+        </div>
         <div className="header__option">
           <span className="header__optionLineOne">Returns</span>
           <span className="header__optionLineTwo">& Orders</span>

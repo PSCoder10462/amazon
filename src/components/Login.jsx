@@ -1,32 +1,41 @@
 import React, { useState } from "react";
 import "../assets/css/Login.css";
 import amazon_black from "../assets/images/amazon_black.png";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import firebase from "../firebase";
 
 function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState(""),
     [pass, setPass] = useState("");
 
   const signIn = (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(pass);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, pass)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        let errorMessage = error.message;
+        console.log(errorMessage);
+      });
   };
 
   const register = (e) => {
     e.preventDefault();
-    // firebase
-    //   .auth()
-    //   .createUserWithEmailAndPassword(email, pass)
-    //   .then(() => {
-    //     // window.location.pathname = "/";
-    //     alert("success");
-    //   })
-    //   .catch((error) => {
-    //     // let errorCode = error.code;
-    //     let errorMessage = error.message;
-    //     console.log(errorMessage);
-    //   });
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, pass)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        // let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log(errorMessage);
+      });
   };
 
   return (
