@@ -27,6 +27,10 @@
   display: flex;
 }
 
+.product__rating > .MuiSvgIcon-root {
+  color: #f0c14b;
+}
+
 .product__info {
   height: 100%;
   margin-bottom: 15px;

@@ -1,5 +1,7 @@
 import React from "react";
 import "../assets/css/Product.css";
+import StarIcon from "@material-ui/icons/Star";
+import StarOutlineIcon from "@material-ui/icons/StarOutline";
 
 function Product({ title, img_url, price, rating }) {
   return (
@@ -14,7 +16,12 @@ function Product({ title, img_url, price, rating }) {
           {Array(rating)
             .fill()
             .map((_, i) => (
-              <p>🌟</p>
+              <StarIcon />
+            ))}
+          {Array(5 - rating)
+            .fill()
+            .map((_, i) => (
+              <StarOutlineIcon />
             ))}
         </div>
       </div>
