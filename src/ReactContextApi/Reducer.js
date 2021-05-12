@@ -5,6 +5,18 @@ export const initialState = {
   user: null,
 };
 
+export const getTotalPrice = (basket) => {
+  let sum = 0;
+  basket?.forEach((b) => {
+    let num = "";
+    for (let i = 0; i < b.price.length; ++i) {
+      if (b.price[i] !== ",") num += b.price[i];
+    }
+    sum += Number(num);
+  });
+  return sum;
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case ADD_TO_BASKET:

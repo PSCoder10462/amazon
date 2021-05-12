@@ -1,26 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../assets/css/Subtotal.css";
 import CurrencyFormat from "react-currency-format";
 import { useStateValue } from "../ReactContextApi/StateProvider";
 import { useHistory } from "react-router-dom";
+import { getTotalPrice } from "../ReactContextApi/Reducer";
 
 function Subtotal() {
   // eslint-disable-next-line
   const [{ basket }, dispatch] = useStateValue();
-  const [price, setPrice] = useState(0);
-  const history = useHistory();
 
-  useEffect(() => {
-    let sum = 0;
-    basket?.forEach((b) => {
-      let num = "";
-      for (let i = 0; i < b.price.length; ++i) {
-        if (b.price[i] !== ",") num += b.price[i];
-      }
-      sum += Number(num);
-    });
-    setPrice(sum);
-  }, [basket]);
+  const history = useHistory();
 
   return (
     <div className="subtotal">
@@ -35,7 +24,7 @@ function Subtotal() {
             </small>
           </>
         )}
-        value={price} // fix this
+        value={getTotalPrice(basket)}
         thousandSeparator={true}
         decimalScale={2}
         displayType={"text"}
