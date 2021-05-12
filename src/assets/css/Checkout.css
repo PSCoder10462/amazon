@@ -10,6 +10,10 @@
   margin-bottom: 10px;
 }
 
+.checkout__greet {
+  padding-left: 10px;
+}
+
 .checkout__title {
   padding: 10px;
   margin-right: 10px;

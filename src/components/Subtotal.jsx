@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import "../assets/css/Subtotal.css";
 import CurrencyFormat from "react-currency-format";
 import { useStateValue } from "../ReactContextApi/StateProvider";
+import { useHistory } from "react-router-dom";
 
 function Subtotal() {
   // eslint-disable-next-line
   const [{ basket }, dispatch] = useStateValue();
   const [price, setPrice] = useState(0);
+  const history = useHistory();
 
   useEffect(() => {
     let sum = 0;
@@ -39,7 +41,9 @@ function Subtotal() {
         displayType={"text"}
         prefix={"₹"}
       />
-      <button className="ptr">Proceed to Checkout</button>
+      <button className="ptr" onClick={() => history.push("/payment")}>
+        Proceed to Checkout
+      </button>
     </div>
   );
 }
