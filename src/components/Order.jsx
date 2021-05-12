@@ -7,7 +7,6 @@ import CurrencyFormat from "react-currency-format";
 
 function Order({ data, orderId }) {
   const { amount, basket, created } = data;
-  const { id, img_url, price, rating, title } = basket;
   return (
     <div className="order">
       <h2>Order</h2>

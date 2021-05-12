@@ -45,6 +45,7 @@ function Payment() {
 
     if (totalPrice !== 0) {
       setProcessing(true);
+      // eslint-disable-next-line
       const payload = await stripe
         .confirmCardPayment(clientSecret, {
           payment_method: {
