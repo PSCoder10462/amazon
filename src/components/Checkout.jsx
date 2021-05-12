@@ -31,6 +31,7 @@ function Checkout() {
               rating={b.rating}
               img_url={b.img_url}
               id={b.id}
+              inOrder={true}
             />
           ))}
         </FlipMove>

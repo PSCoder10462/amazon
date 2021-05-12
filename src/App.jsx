@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Payment from "./components/Payment";
+import Orders from "./components/Orders";
 import Checkout from "./components/Checkout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useEffect } from "react";
@@ -12,7 +13,9 @@ import { SET_USER } from "./ReactContextApi/ActionTypes";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-const promise = loadStripe("pk_t1JRpfow927XUoPtmgataMC5m5aLewzNYUP");
+const promise = loadStripe(
+  "pk_test_51IqCSGSCsARf75NHM0Lm2KGmB62miDXAsZlQdL6WiDAdkG0uO9PM3h9AGwHKCGT3yQvXDPVQGich5oRL0OGxNB1s0026T4RSoM"
+);
 
 function App() {
   // eslint-disable-next-line
@@ -39,6 +42,10 @@ function App() {
         <Switch>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/orders">
+            <Header />
+            <Orders />
           </Route>
           <Route path="/checkout">
             <Header />

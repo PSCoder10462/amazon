@@ -6,7 +6,7 @@ import { useStateValue } from "../ReactContextApi/StateProvider";
 import { REMOVE_FROM_BASKET } from "../ReactContextApi/ActionTypes";
 
 const CheckoutProduct = forwardRef(
-  ({ id, title, img_url, price, rating }, ref) => {
+  ({ id, title, img_url, price, rating, inOrder }, ref) => {
     // eslint-disable-next-line
     const [state, dispatch] = useStateValue();
 
@@ -39,9 +39,11 @@ const CheckoutProduct = forwardRef(
                 <StarOutlineIcon key={i} />
               ))}
           </div>
-          <button onClick={removeFromBasket} className="ptr">
-            Remove from Cart
-          </button>
+          {inOrder && (
+            <button onClick={removeFromBasket} className="ptr">
+              Remove from Cart
+            </button>
+          )}
         </div>
       </div>
     );

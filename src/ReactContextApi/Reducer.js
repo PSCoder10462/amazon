@@ -1,4 +1,9 @@
-import { ADD_TO_BASKET, REMOVE_FROM_BASKET, SET_USER } from "./ActionTypes";
+import {
+  ADD_TO_BASKET,
+  REMOVE_FROM_BASKET,
+  SET_USER,
+  EMPTY_BASKET,
+} from "./ActionTypes";
 
 export const initialState = {
   basket: [],
@@ -38,6 +43,12 @@ const reducer = (state, action) => {
         );
       }
       return { ...state, basket: newBasket };
+
+    case EMPTY_BASKET:
+      return {
+        ...state,
+        basket: [],
+      };
 
     case SET_USER:
       return {

@@ -8,6 +8,10 @@ import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getTotalPrice } from "../ReactContextApi/Reducer";
 import axios from "../axios";
+import { EMPTY_BASKET } from "../ReactContextApi/ActionTypes";
+import firebase from "../firebase";
+
+const db = firebase.firestore();
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -30,7 +34,10 @@ function Payment() {
       });
       setClientSecret(response.data.clientSecret);
     };
+    getClientSecret();
   }, [basket]);
+
+  console.log(clientSecret);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +53,20 @@ function Payment() {
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+
+        db.collection("users")
+          .doc(user?.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({
+            basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
+
+        dispatch({
+          type: EMPTY_BASKET,
+        });
 
         history.replace("/orders");
       });
@@ -86,6 +107,8 @@ function Payment() {
                   img_url={b.img_url}
                   price={b.price}
                   rating={b.rating}
+                  key={b.id}
+                  inOrder={true}
                 />
               ))}
             </FlipMove>
@@ -103,6 +126,11 @@ function Payment() {
                   renderText={(value) => (
                     <>
                       <h3>Order Total: {value}</h3>
+                      <p>
+                        <small>
+                          Enter "4242424242..." for fake card in all fields
+                        </small>
+                      </p>
                     </>
                   )}
                   value={getTotalPrice(basket)}
