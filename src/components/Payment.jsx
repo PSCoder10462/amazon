@@ -41,35 +41,41 @@ function Payment() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setProcessing(true);
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(({ paymentIntent }) => {
-        // payment intent is payment confirmation
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
+    const totalPrice = getTotalPrice(basket);
 
-        db.collection("users")
-          .doc(user?.uid)
-          .collection("orders")
-          .doc(paymentIntent.id)
-          .set({
-            basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created,
+    if (totalPrice !== 0) {
+      setProcessing(true);
+      const payload = await stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        })
+        .then(({ paymentIntent }) => {
+          // payment intent is payment confirmation
+          setSucceeded(true);
+          setError(null);
+          setProcessing(false);
+
+          db.collection("users")
+            .doc(user?.uid)
+            .collection("orders")
+            .doc(paymentIntent.id)
+            .set({
+              basket,
+              amount: paymentIntent.amount,
+              created: paymentIntent.created,
+            });
+
+          dispatch({
+            type: EMPTY_BASKET,
           });
 
-        dispatch({
-          type: EMPTY_BASKET,
+          history.replace("/orders");
         });
-
-        history.replace("/orders");
-      });
+    } else {
+      alert("Not enough items in the cart!");
+    }
   };
 
   const handleChange = (e) => {
