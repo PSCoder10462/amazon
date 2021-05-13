@@ -7,9 +7,14 @@ import { getTotalPrice } from "../ReactContextApi/Reducer";
 
 function Subtotal() {
   // eslint-disable-next-line
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
 
   const history = useHistory();
+
+  const handleSubmit = () => {
+    if (!user) history.push("/login");
+    else history.push("/payment");
+  };
 
   return (
     <div className="subtotal">
@@ -30,7 +35,7 @@ function Subtotal() {
         displayType={"text"}
         prefix={"₹"}
       />
-      <button className="ptr" onClick={() => history.push("/payment")}>
+      <button className="ptr" onClick={handleSubmit}>
         Proceed to Checkout
       </button>
     </div>
