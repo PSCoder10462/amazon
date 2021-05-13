@@ -31,7 +31,7 @@ function Orders() {
   }, [user]);
   return (
     <div className="orders">
-      <h1>Your orders</h1>
+      <h1>Your orders: {orders?.length}</h1>
       <div className="orders__order">
         {orders === [] ? (
           <p>You don't have any orders yet!</p>
